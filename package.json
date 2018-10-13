@@ -1,0 +1,21 @@
+{
+	"name": "swappuyo-captstone-server",
+	"version": "1.0.0",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon server.js"
+	},
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"dependencies": {
+		"bcryptjs": "^2.4.3",
+		"express": "^4.16.4",
+		"mongo": "^0.1.0",
+		"mongoose": "^5.3.3",
+		"morgan": "^1.9.1",
+		"nodemon": "^1.18.4",
+		"passport": "^0.4.0"
+	}
+}
