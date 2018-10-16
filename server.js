@@ -1,4 +1,6 @@
 const express = require('express');
+const ENV = require('dotenv');
+ENV.config();
 const cors = require('cors');
 const morgan = require('morgan');
 const { PORT } = require('./config');
@@ -6,8 +8,17 @@ const fetch = require('node-fetch');
 const { MONGO_URL, CLIENT_ORIGIN } = require('./config');
 const { authRouter } = require('./auth/auth.router');
 const { userRouter } = require('./user/user.router');
+const { hwSwapRouter } = require('./tradeSwap/hardwareSwapRouter');
 const { localStrategy, jwtStrategy } = require('./auth/auth.strategy');
 const { dbConnect } = require('./db-mongoose');
+const snoowrap = require('snoowrap');
+
+// const r = new snoowrap({
+//   userAgent: 'Test app by /u/niconi123',
+//   clientId: process.env.clientId,
+//   clientSecret: process.env.clientSecret,
+//   accessToken: process.env.accessToken
+// });
 
 const app = express();
 
@@ -28,10 +39,7 @@ passport.use(jwtStrategy);
 
 app.use('/api/user', userRouter);
 app.use('/api', authRouter);
-
-app.get('/', (req, res, next) => {
-  console.log('hello');
-});
+app.use('/api/hardwareswap', hwSwapRouter);
 
 app.post('/', (req, res, next) => {
   console.log(req.body);
