@@ -8,6 +8,7 @@ const fetch = require('node-fetch');
 const { MONGO_URL, CLIENT_ORIGIN } = require('./config');
 const { authRouter } = require('./auth/auth.router');
 const { userRouter } = require('./user/user.router');
+const { wishListRouter } = require('./wishlist/wishlist.router');
 const { hwSwapRouter } = require('./tradeSwap/hardwareSwapRouter');
 const { localStrategy, jwtStrategy } = require('./auth/auth.strategy');
 const { dbConnect } = require('./db-mongoose');
@@ -40,6 +41,7 @@ passport.use(jwtStrategy);
 app.use('/api/user', userRouter);
 app.use('/api', authRouter);
 app.use('/api/hardwareswap', hwSwapRouter);
+app.use('/api/wishList', wishListRouter);
 
 app.get('/test', (req, res, next) => {
   return fetch('https://www.reddit.com/r/videos').then(response =>
