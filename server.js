@@ -12,7 +12,7 @@ const { hwSwapRouter } = require('./tradeSwap/hardwareSwapRouter');
 const { localStrategy, jwtStrategy } = require('./auth/auth.strategy');
 const { dbConnect } = require('./db-mongoose');
 const snoowrap = require('snoowrap');
-
+const btoa = require('btoa');
 // const r = new snoowrap({
 //   userAgent: 'Test app by /u/niconi123',
 //   clientId: process.env.clientId,
@@ -41,15 +41,37 @@ app.use('/api/user', userRouter);
 app.use('/api', authRouter);
 app.use('/api/hardwareswap', hwSwapRouter);
 
-app.post('/', (req, res, next) => {
-  console.log(req.body);
-  next();
-});
-
 app.get('/test', (req, res, next) => {
   return fetch('https://www.reddit.com/r/videos').then(response =>
     res.json(response)
   );
+});
+
+app.post('/api/code', (req, res, next) => {
+  const code = req.body.code;
+  console.log(req.body);
+  console.log('Here');
+  console.log(process.env.clientId, process.env.clientSecret);
+
+  console.log(btoa(`${process.env.clientId}:${process.env.clientSecret}`));
+
+  return fetch('https://www.reddit.com/api/v1/access_token', {
+    method: 'POST', // or 'PUT',
+    mode: 'no-cors',
+    headers: {
+      Authorization:
+				'Basic ' + btoa(`${process.env.clientId}:${process.env.clientSecret}`),
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `grant_type=authorization_code&code=${code}&redirect_uri=http://localhost:3000/RedditTokenRedirect`
+  })
+    .then(res => {
+      return res.json();
+    })
+    .then(data => {
+      res.json(data);
+    })
+    .catch(err => console.log(err));
 });
 
 app.use((req, res, next) => {

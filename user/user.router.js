@@ -11,6 +11,7 @@ const userRouter = express.Router();
 // CREATE NEW USER
 userRouter.post('/', (request, response) => {
   // Remember, We can access the request body payload thanks to the express.json() middleware we used in server.js
+  console.log(request.body);
   const newUser = {
     name: request.body.name,
     email: request.body.email,
@@ -18,7 +19,6 @@ userRouter.post('/', (request, response) => {
     password: request.body.password
   };
 
-  console.log(request.body);
   // Step 1: Validate new user information is correct.
   // Here, we use the Joi NPM library for easy validation
   // https://www.npmjs.com/package/joi
