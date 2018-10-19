@@ -41,7 +41,7 @@ passport.use(jwtStrategy);
 app.use('/api/user', userRouter);
 app.use('/api', authRouter);
 app.use('/api/hardwareswap', hwSwapRouter);
-app.use('/api/wishList', wishListRouter);
+app.use('/api/wishlist', wishListRouter);
 
 app.get('/test', (req, res, next) => {
   return fetch('https://www.reddit.com/r/videos').then(response =>

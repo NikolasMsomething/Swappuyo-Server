@@ -26,8 +26,12 @@ hwSwapRouter.get('/', (req, res, next) => {
 
   reddit
     .getSubreddit('hardwareswap')
-    .getHot()
-    .then(data => res.json(data))
+
+    .getHot({ limit: 45 })
+    .then(data => {
+      console.log(data);
+      res.json(data);
+    })
     .catch(err => console.log(err));
   // console.log('hello');
 });
