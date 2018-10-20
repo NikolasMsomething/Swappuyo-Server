@@ -9,6 +9,8 @@ const { MONGO_URL, CLIENT_ORIGIN } = require('./config');
 const { authRouter } = require('./auth/auth.router');
 const { userRouter } = require('./user/user.router');
 const { wishListRouter } = require('./wishlist/wishlist.router');
+const { gameSwapRouter } = require('./tradeSwap/gameSwapRouter');
+const { avExchangeRouter } = require('./tradeSwap/avExchangeRouter');
 const { hwSwapRouter } = require('./tradeSwap/hardwareSwapRouter');
 const { mechMarketRouter } = require('./tradeSwap/mechmarketRouter');
 const { localStrategy, jwtStrategy } = require('./auth/auth.strategy');
@@ -42,6 +44,8 @@ passport.use(jwtStrategy);
 app.use('/api/user', userRouter);
 app.use('/api', authRouter);
 app.use('/api/hardwareswap', hwSwapRouter);
+app.use('/api/gameswap', gameSwapRouter);
+app.use('/api/AVexchange', avExchangeRouter);
 app.use('/api/wishlist', wishListRouter);
 app.use('/api/mechmarket', mechMarketRouter);
 
