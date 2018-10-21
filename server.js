@@ -5,7 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const { PORT } = require('./config');
 const fetch = require('node-fetch');
-const { MONGO_URL, CLIENT_ORIGIN } = require('./config');
+const { MONGODB_URI, CLIENT_ORIGIN } = require('./config');
 const { authRouter } = require('./auth/auth.router');
 const { userRouter } = require('./user/user.router');
 const { wishListRouter } = require('./wishlist/wishlist.router');
@@ -98,7 +98,7 @@ app.use((err, req, res, next) => {
   }
 });
 
-dbConnect(MONGO_URL);
+dbConnect(MONGODB_URI);
 
 app.listen(PORT, () => {
   console.log(`Server is listening on ${PORT}`);

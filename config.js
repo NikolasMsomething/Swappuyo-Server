@@ -19,7 +19,7 @@ module.exports = {
     INTERNAL_SERVER_ERROR: 500
   },
   CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
-  MONGO_URL: process.env.MONGODB_URI || 'mongodb://localhost:27017/swappuyo',
+  MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017/swappuyo',
   TEST_MONGO_URL:
 		process.env.TEST_MONGO_URL || 'mongodb://localhost:27017/test-swappuyo',
   JWT_SECRET: process.env.JWT_SECRET || 'default',
