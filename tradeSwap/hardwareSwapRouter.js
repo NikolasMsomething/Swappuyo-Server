@@ -22,6 +22,8 @@ hwSwapRouter.get('/', async (req, res, next) => {
 		next(err);
 	}
 
+	const reddit = createSnooWrap(refreshToken);
+
 	try {
 		let hardWareSwapItems = await reddit
 			.getSubreddit('hardwareswap')
@@ -30,8 +32,6 @@ hwSwapRouter.get('/', async (req, res, next) => {
 	} catch (error) {
 		next(error);
 	}
-
-	const reddit = createSnooWrap(refreshToken);
 });
 
 module.exports = { hwSwapRouter };
