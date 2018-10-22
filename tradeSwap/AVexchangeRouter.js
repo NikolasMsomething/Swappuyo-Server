@@ -2,12 +2,14 @@ const express = require('express');
 const avExchangeRouter = express.Router();
 const snoowrap = require('snoowrap');
 
+const { clientId, clientSecret } = require('../config.js');
+
 function createSnooWrap(refresh) {
 	//WE CREATE THIS HIGHER ORDER FUNCTION TO PASS IN PARAMATER OF REFRESH TOKEN PARSED THROUGH THE REQUEST QUERY!!!
 	return new snoowrap({
 		userAgent: 'Test app by /u/niconi123',
-		clientId: process.env.clientId,
-		clientSecret: process.env.clientSecret,
+		clientId: clientId,
+		clientSecret: clientSecret,
 		refreshToken: refresh
 	});
 }

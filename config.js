@@ -6,8 +6,8 @@
 module.exports = {
   // We use the OR ("||") operator to check if the PORT environment variable exists. If not, we default to 8080
   PORT: process.env.PORT || 8080,
-  clientId: process.env.clientId,
-  clientSecret: process.env.clientSecret,
+  clientId: process.env.clientId || 'jMNgm9tZ6e0Kig',
+  clientSecret: process.env.clientSecret || 'qVBQ3qeJfe6NzYCMwY8aDh2oCoI',
   refreshToken: process.env.refreshToken,
   HTTP_STATUS_CODES: {
     OK: 200,
