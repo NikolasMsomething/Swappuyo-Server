@@ -14,8 +14,10 @@ function createSnooWrap(refresh) {
 
 hwSwapRouter.get('/', async (req, res, next) => {
 	let { refreshToken } = req.query;
+	let redditFilter = req.query.redditFilter;
 	console.log(req.query);
 	console.log('QUERY ABOVE');
+
 	if (!refreshToken) {
 		const err = new Error('Wheres your token bruh?');
 		err.status = 400;
@@ -24,13 +26,43 @@ hwSwapRouter.get('/', async (req, res, next) => {
 
 	const reddit = createSnooWrap(refreshToken);
 
-	try {
-		let hardWareSwapItems = await reddit
-			.getSubreddit('hardwareswap')
-			.getHot({ limit: 45 });
-		res.status(200).json(hardWareSwapItems);
-	} catch (error) {
-		next(error);
+	if (!redditFilter) {
+		try {
+			let hardWareSwapItems = await reddit
+				.getSubreddit('hardwareswap')
+				.getHot({ limit: 45 });
+			res.status(200).json(hardWareSwapItems);
+		} catch (error) {
+			next(error);
+		}
+	} else {
+		try {
+			switch (redditFilter) {
+				case 'hot': {
+					let hardWareSwapItems = await reddit.getHot('hardwareswap', {
+						limit: 45
+					});
+					console.log(redditFilter);
+					res.status(201).json(hardWareSwapItems);
+				}
+				case 'new': {
+					let hardWareSwapItems = await reddit.getNew('hardwareswap', {
+						limit: 45
+					});
+					console.log(redditFilter);
+					res.status(200).json(hardWareSwapItems);
+				}
+				case 'rising': {
+					let hardWareSwapItems = await reddit.getRising('hardwareswap', {
+						limit: 45
+					});
+					console.log(redditFilter);
+					res.status(200).json(hardWareSwapItems);
+				}
+			}
+		} catch (error) {
+			next(error);
+		}
 	}
 });
 

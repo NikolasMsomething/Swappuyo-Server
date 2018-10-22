@@ -14,7 +14,11 @@ function createSnooWrap(refresh) {
 
 avExchangeRouter.get('/', async (req, res, next) => {
 	let { refreshToken } = req.query;
+	let redditFilter = req.query.redditFilter;
+
 	console.log(req.query);
+	console.log(refreshToken);
+	console.log(redditFilter);
 	console.log('QUERY ABOVE');
 	if (!refreshToken) {
 		const err = new Error('Wheres your token bruh?');
@@ -25,10 +29,25 @@ avExchangeRouter.get('/', async (req, res, next) => {
 	const reddit = createSnooWrap(refreshToken);
 
 	try {
-		let avExchangeItems = await reddit
-			.getSubreddit('AVexchange')
-			.getHot({ limit: 45 });
-		res.status(200).json(avExchangeItems);
+		switch (redditFilter) {
+			case 'hot': {
+				let avExchangeItems = await reddit.getHot('AVexchange', { limit: 45 });
+				console.log(avExchangeItems);
+				res.status(200).json(avExchangeItems);
+			}
+			case 'new': {
+				let avExchangeItems = await reddit.getNew('AVexchange', { limit: 45 });
+				console.log(avExchangeItems);
+				res.status(200).json(avExchangeItems);
+			}
+			case 'rising': {
+				let avExchangeItems = await reddit.getRising('AVexchange', {
+					limit: 45
+				});
+				console.log(avExchangeItems);
+				res.status(200).json(avExchangeItems);
+			}
+		}
 	} catch (error) {
 		next(error);
 	}

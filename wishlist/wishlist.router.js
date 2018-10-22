@@ -3,7 +3,7 @@ const express = require('express');
 const Wishlist = require('./wishlist.model');
 const {
 	validateMongooseId,
-	requiredFields
+	requiredFieldsInReqBody
 } = require('../validationMiddleWare/validators');
 const wishListRouter = express.Router();
 const passport = require('passport');
@@ -14,7 +14,7 @@ wishListRouter.use(
 wishListRouter.post(
 	'/',
 	validateMongooseId,
-	requiredFields,
+	requiredFieldsInReqBody(['title', 'url', 'author']),
 	async (req, res, next) => {
 		console.log(req.user.id);
 
@@ -39,6 +39,23 @@ wishListRouter.get('/', validateMongooseId, async (req, res, next) => {
 	try {
 		const wishItems = await Wishlist.find({ userId });
 		return res.status(200).json(wishItems);
+	} catch (e) {
+		next(e);
+	}
+});
+
+wishListRouter.delete('/:id', validateMongooseId, async (req, res, next) => {
+	let { id } = req.params;
+	let userId = req.user.id;
+
+	console.log(id, userId, 'hello', req.body);
+
+	try {
+		const deleteSuccess = await Wishlist.findByIdAndDelete({
+			_id: id,
+			userId
+		});
+		return res.status(204).json(deleteSuccess);
 	} catch (e) {
 		next(e);
 	}

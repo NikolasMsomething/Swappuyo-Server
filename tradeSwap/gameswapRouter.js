@@ -14,6 +14,7 @@ function createSnooWrap(refresh) {
 
 gameSwapRouter.get('/', async (req, res, next) => {
 	let { refreshToken } = req.query;
+	let redditFilter = req.query.redditFilter;
 	console.log(req.query);
 	console.log('QUERY ABOVE');
 	if (!refreshToken) {
@@ -25,10 +26,25 @@ gameSwapRouter.get('/', async (req, res, next) => {
 	const reddit = createSnooWrap(refreshToken);
 
 	try {
-		let gameSwapItems = await reddit
-			.getSubreddit('gameswap')
-			.getHot({ limit: 45 });
-		res.status(200).json(gameSwapItems);
+		switch (redditFilter) {
+			case 'hot': {
+				let gameswapItems = await reddit.getHot('gameswap', { limit: 45 });
+				console.log(redditFilter);
+				res.status(200).json(gameswapItems);
+			}
+			case 'new': {
+				let gameswapItems = await reddit.getNew('gameswap', { limit: 45 });
+				console.log(redditFilter);
+				res.status(200).json(gameswapItems);
+			}
+			case 'rising': {
+				let avExchangeItems = await reddit.getRising('gameswap', {
+					limit: 45
+				});
+				console.log(redditFilter);
+				res.status(200).json(gameswapItems);
+			}
+		}
 	} catch (error) {
 		next(error);
 	}

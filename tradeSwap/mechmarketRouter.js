@@ -14,6 +14,7 @@ function createSnooWrap(refresh) {
 
 mechMarketRouter.get('/', async (req, res, next) => {
 	console.log('h');
+	let redditFilter = req.query.redditFilter;
 	let { refreshToken } = req.query;
 	console.log(req.query);
 	console.log('QUERY ABOVE');
@@ -26,10 +27,25 @@ mechMarketRouter.get('/', async (req, res, next) => {
 	const reddit = createSnooWrap(refreshToken);
 
 	try {
-		let mechMarketItems = await reddit
-			.getSubreddit('mechmarket')
-			.getHot({ limit: 45 });
-		res.status(200).json(mechMarketItems);
+		switch (redditFilter) {
+			case 'hot': {
+				let mechMarketItems = await reddit.getHot('mechmarket', { limit: 45 });
+				console.log(redditFilter);
+				res.status(201).json(mechMarketItems);
+			}
+			case 'new': {
+				let mechMarketItems = await reddit.getNew('mechmarket', { limit: 45 });
+				console.log(redditFilter);
+				res.status(200).json(mechMarketItems);
+			}
+			case 'rising': {
+				let mechMarketItems = await reddit.getRising('mechmarket', {
+					limit: 45
+				});
+				console.log(redditFilter);
+				res.status(200).json(mechMarketItems);
+			}
+		}
 	} catch (error) {
 		next(error);
 	}

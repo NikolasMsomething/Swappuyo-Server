@@ -73,8 +73,8 @@ app.post('/api/code', (req, res, next) => {
     },
     body: `grant_type=authorization_code&code=${code}&redirect_uri=http://localhost:3000/RedditTokenRedirect`
   })
-    .then(res => {
-      return res.json();
+    .then(data => {
+      return data.json();
     })
     .then(data => {
       res.json(data);

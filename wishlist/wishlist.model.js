@@ -7,7 +7,9 @@ const wishListSchema = new mongoose.Schema({
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
-wishListSchema.set('toObject', {
+wishListSchema.set('timestamps', true);
+
+wishListSchema.set('toJSON', {
   virtuals: true, //returns regular id in this scenario
   versionKey: false,
   transform: (doc, result) => {
