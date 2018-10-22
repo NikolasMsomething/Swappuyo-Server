@@ -35,19 +35,19 @@ avExchangeRouter.get('/', async (req, res, next) => {
 			case 'hot': {
 				let avExchangeItems = await reddit.getHot('AVexchange', { limit: 45 });
 				console.log(avExchangeItems);
-				res.status(200).json(avExchangeItems);
+				return res.status(200).json(avExchangeItems);
 			}
 			case 'new': {
 				let avExchangeItems = await reddit.getNew('AVexchange', { limit: 45 });
 				console.log(avExchangeItems);
-				res.status(200).json(avExchangeItems);
+				return res.status(200).json(avExchangeItems);
 			}
 			case 'rising': {
 				let avExchangeItems = await reddit.getRising('AVexchange', {
 					limit: 45
 				});
 				console.log(avExchangeItems);
-				res.status(200).json(avExchangeItems);
+				return res.status(200).json(avExchangeItems);
 			}
 		}
 	} catch (error) {

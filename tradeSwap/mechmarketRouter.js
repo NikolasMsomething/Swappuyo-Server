@@ -22,7 +22,7 @@ mechMarketRouter.get('/', async (req, res, next) => {
 	if (!refreshToken) {
 		const err = new Error('Wheres your token bruh?');
 		err.status = 400;
-		next(err);
+		return next(err);
 	}
 
 	const reddit = createSnooWrap(refreshToken);
@@ -32,19 +32,19 @@ mechMarketRouter.get('/', async (req, res, next) => {
 			case 'hot': {
 				let mechMarketItems = await reddit.getHot('mechmarket', { limit: 45 });
 				console.log(redditFilter);
-				res.status(201).json(mechMarketItems);
+				return res.status(201).json(mechMarketItems);
 			}
 			case 'new': {
 				let mechMarketItems = await reddit.getNew('mechmarket', { limit: 45 });
 				console.log(redditFilter);
-				res.status(200).json(mechMarketItems);
+				return res.status(200).json(mechMarketItems);
 			}
 			case 'rising': {
 				let mechMarketItems = await reddit.getRising('mechmarket', {
 					limit: 45
 				});
 				console.log(redditFilter);
-				res.status(200).json(mechMarketItems);
+				return res.status(200).json(mechMarketItems);
 			}
 		}
 	} catch (error) {

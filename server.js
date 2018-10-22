@@ -14,13 +14,12 @@ const {
 const { authRouter } = require('./auth/auth.router');
 const { userRouter } = require('./user/user.router');
 const { wishListRouter } = require('./wishlist/wishlist.router');
-const { gameSwapRouter } = require('./tradeSwap/gameswapRouter');
+const { gameSwapRouter } = require('./tradeSwap/gameswapRouter'); //WEIRD NODE ERROR SOMETIMES ACCEPTS BAD PATH NAMES
 const { avExchangeRouter } = require('./tradeSwap/AVexchangeRouter');
 const { hwSwapRouter } = require('./tradeSwap/hardwareSwapRouter');
 const { mechMarketRouter } = require('./tradeSwap/mechmarketRouter');
 const { localStrategy, jwtStrategy } = require('./auth/auth.strategy');
 const { dbConnect } = require('./db-mongoose');
-const snoowrap = require('snoowrap');
 const btoa = require('btoa');
 // const r = new snoowrap({
 //   userAgent: 'Test app by /u/niconi123',

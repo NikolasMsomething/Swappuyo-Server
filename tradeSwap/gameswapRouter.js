@@ -21,7 +21,7 @@ gameSwapRouter.get('/', async (req, res, next) => {
 	if (!refreshToken) {
 		const err = new Error('Wheres your token bruh?');
 		err.status = 400;
-		next(err);
+		return next(err);
 	}
 
 	const reddit = createSnooWrap(refreshToken);
@@ -31,23 +31,23 @@ gameSwapRouter.get('/', async (req, res, next) => {
 			case 'hot': {
 				let gameswapItems = await reddit.getHot('gameswap', { limit: 45 });
 				console.log(redditFilter);
-				res.status(200).json(gameswapItems);
+				return res.status(200).json(gameswapItems);
 			}
 			case 'new': {
 				let gameswapItems = await reddit.getNew('gameswap', { limit: 45 });
 				console.log(redditFilter);
-				res.status(200).json(gameswapItems);
+				return res.status(200).json(gameswapItems);
 			}
 			case 'rising': {
-				let avExchangeItems = await reddit.getRising('gameswap', {
+				let gameswapItems = await reddit.getRising('gameswap', {
 					limit: 45
 				});
 				console.log(redditFilter);
-				res.status(200).json(gameswapItems);
+				return res.status(200).json(gameswapItems);
 			}
 		}
 	} catch (error) {
-		next(error);
+		return next(error);
 	}
 });
 
