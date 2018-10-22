@@ -5,7 +5,12 @@ const cors = require('cors');
 const morgan = require('morgan');
 const { PORT } = require('./config');
 const fetch = require('node-fetch');
-const { MONGODB_URI, CLIENT_ORIGIN } = require('./config');
+const {
+  MONGODB_URI,
+  CLIENT_ORIGIN,
+  clientId,
+  clientSecret
+} = require('./config');
 const { authRouter } = require('./auth/auth.router');
 const { userRouter } = require('./user/user.router');
 const { wishListRouter } = require('./wishlist/wishlist.router');
@@ -59,16 +64,15 @@ app.post('/api/code', (req, res, next) => {
   const code = req.body.code;
   console.log(req.body);
   console.log('Here');
-  console.log(process.env.clientId, process.env.clientSecret);
+  console.log(clientId, clientSecret);
 
-  console.log(btoa(`${process.env.clientId}:${process.env.clientSecret}`));
+  console.log(btoa(`${clientId}:${clientSecret}`));
 
   return fetch('https://www.reddit.com/api/v1/access_token', {
     method: 'POST', // or 'PUT',
     mode: 'no-cors',
     headers: {
-      Authorization:
-				'Basic ' + btoa(`${process.env.clientId}:${process.env.clientSecret}`),
+      Authorization: 'Basic ' + btoa(`${clientId}:${clientSecret}`),
       'Content-Type': 'application/x-www-form-urlencoded'
     },
     body: `grant_type=authorization_code&code=${code}&redirect_uri=http://localhost:3000/RedditTokenRedirect`
