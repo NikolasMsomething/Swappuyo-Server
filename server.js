@@ -55,9 +55,7 @@ app.use('/api/wishlist', wishListRouter);
 app.use('/api/mechmarket', mechMarketRouter);
 
 app.get('/test', (req, res, next) => {
-  return fetch('https://www.reddit.com/r/videos').then(response =>
-    res.json(response)
-  );
+  res.json({ dog: 'works' });
 });
 
 app.post('/api/code', (req, res, next) => {
