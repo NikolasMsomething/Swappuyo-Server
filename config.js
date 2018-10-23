@@ -9,6 +9,8 @@ module.exports = {
   clientId: process.env.clientId || 'jMNgm9tZ6e0Kig',
   clientSecret: process.env.clientSecret || 'qVBQ3qeJfe6NzYCMwY8aDh2oCoI',
   refreshToken: process.env.refreshToken,
+  redditRedirect:
+		process.env.redditRedirect || 'http://localhost:3000/RedditTokenRedirect',
   HTTP_STATUS_CODES: {
     OK: 200,
     CREATED: 201,

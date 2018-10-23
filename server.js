@@ -9,7 +9,8 @@ const {
   MONGODB_URI,
   CLIENT_ORIGIN,
   clientId,
-  clientSecret
+  clientSecret,
+  redditRedirect
 } = require('./config');
 const { authRouter } = require('./auth/auth.router');
 const { userRouter } = require('./user/user.router');
@@ -72,7 +73,7 @@ app.post('/api/code', (req, res, next) => {
       Authorization: 'Basic ' + btoa(`${clientId}:${clientSecret}`),
       'Content-Type': 'application/x-www-form-urlencoded'
     },
-    body: `grant_type=authorization_code&code=${code}&redirect_uri=http://localhost:3000/RedditTokenRedirect`
+    body: `grant_type=authorization_code&code=${code}&redirect_uri=${redditRedirect}` //http://localhost:3000/RedditTokenRedirect
   })
     .then(data => {
       return data.json();
