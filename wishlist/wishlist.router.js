@@ -25,9 +25,9 @@ wishListRouter.post(
 				url: req.body.url,
 				userId: req.user.id
 			});
-			res.status(201).json(createResponse);
+			return res.status(201).json(createResponse);
 		} catch (e) {
-			next(e);
+			return next(e);
 		}
 	}
 );
