@@ -5,6 +5,7 @@ const validateMongooseId = (req, res, next) => {
   let itemId;
 
   if (req.user.id) {
+    console.log(req.user);
     userId = req.user.id;
     console.log(
       `Here in validator userId: ${userId}`,
@@ -14,7 +15,7 @@ const validateMongooseId = (req, res, next) => {
       console.log('hello');
       const err = new Error('Invalid user id!');
       err.status = 400;
-      next(err);
+      return next(err);
     }
   }
 
@@ -25,11 +26,11 @@ const validateMongooseId = (req, res, next) => {
       console.log('hello');
       const err = new Error('Invalid item id!');
       err.status = 400;
-      next(err);
+      return next(err);
     }
   }
 
-  next();
+  return next();
 };
 
 const requiredFieldsInReqBody = arguments => (req, res, next) => {
@@ -47,7 +48,7 @@ const requiredFieldsInReqBody = arguments => (req, res, next) => {
 
   fieldCheck();
 
-  next();
+  return next();
 };
 
 module.exports = { validateMongooseId, requiredFieldsInReqBody };

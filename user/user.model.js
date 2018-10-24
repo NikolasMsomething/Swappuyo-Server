@@ -29,6 +29,8 @@ userSchema.methods.validatePassword = function(password) {
   return bcrypt.compare(password, this.password);
 };
 
+//CRUCIAL// JOI ERRORS LIE ON THE RES.BODY
+
 const UserJoiSchema = Joi.object().keys({
   name: Joi.string()
     .min(1)
@@ -39,16 +41,19 @@ const UserJoiSchema = Joi.object().keys({
     .min(4)
     .max(30)
     .trim()
-    .required(),
+    .required()
+    .options({ convert: false }),
   password: Joi.string()
     .min(8)
     .max(30)
     .trim()
-    .required(),
+    .required()
+    .options({ convert: false }),
   email: Joi.string()
     .email()
     .trim()
     .required()
+    .options({ convert: false })
 });
 
 const User = mongoose.model('user', userSchema);

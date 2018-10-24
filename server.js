@@ -100,8 +100,16 @@ app.use((err, req, res, next) => {
   }
 });
 
-dbConnect(MONGODB_URI);
+if (require.main === module) {
+  dbConnect(MONGODB_URI);
 
-app.listen(PORT, () => {
-  console.log(`Server is listening on ${PORT}`);
-});
+  app
+    .listen(PORT, function() {
+      console.info(`Server listening on ${this.address().port}`);
+    })
+    .on('error', err => {
+      console.error(err);
+    });
+}
+
+module.exports = app;

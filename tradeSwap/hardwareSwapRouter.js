@@ -14,9 +14,10 @@ function createSnooWrap(refresh) {
 }
 
 hwSwapRouter.get('/', async (req, res, next) => {
+	console.log(req.user, 'here');
 	let { refreshToken } = req.query;
 	let redditFilter = req.query.redditFilter;
-	console.log(req.query);
+
 	console.log('QUERY ABOVE');
 
 	if (!refreshToken) {

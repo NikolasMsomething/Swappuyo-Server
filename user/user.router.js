@@ -24,6 +24,8 @@ userRouter.post('/', (request, response) => {
       .json({ error: validation.error });
   }
 
+  console.log(validation);
+
   User.findOne({
     $or: [{ email: newUser.email }, { username: newUser.username }]
   })

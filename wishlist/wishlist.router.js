@@ -17,6 +17,7 @@ wishListRouter.post(
 	requiredFieldsInReqBody(['title', 'url', 'author']),
 	async (req, res, next) => {
 		console.log(req.user.id);
+		console.log(req.user);
 
 		try {
 			const createResponse = await Wishlist.create({
@@ -34,7 +35,10 @@ wishListRouter.post(
 
 wishListRouter.get('/', validateMongooseId, async (req, res, next) => {
 	const userId = req.user.id;
-	console.log(req);
+	console.log('THIS', req.user.id);
+
+	console.log(req.user, 'HERE');
+	console.log('hello');
 
 	try {
 		const wishItems = await Wishlist.find({ userId });
