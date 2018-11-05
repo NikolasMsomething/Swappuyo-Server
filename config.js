@@ -8,7 +8,6 @@ module.exports = {
   PORT: process.env.PORT || 8080,
   clientId: process.env.clientId || 'jMNgm9tZ6e0Kig',
   clientSecret: process.env.clientSecret || 'qVBQ3qeJfe6NzYCMwY8aDh2oCoI',
-  refreshToken: process.env.refreshToken,
   redditRedirect:
 		process.env.redditRedirect || 'http://localhost:3000/RedditTokenRedirect',
   HTTP_STATUS_CODES: {
@@ -24,6 +23,7 @@ module.exports = {
   MONGODB_URI: process.env.MONGODB_URI || 'mongodb://localhost:27017/swappuyo',
   TEST_MONGO_URL:
 		process.env.TEST_MONGO_URL || 'mongodb://localhost:27017/test-swappuyo',
+  TOKEN_SECRET: process.env.TOKEN_SECRET || 'secretestsecretever',
   JWT_SECRET: process.env.JWT_SECRET || 'default',
   JWT_EXPIRY: process.env.JWT_EXPIRY || '7d'
 };

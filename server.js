@@ -5,13 +5,7 @@ const cors = require('cors');
 const morgan = require('morgan');
 const { PORT } = require('./config');
 const fetch = require('node-fetch');
-const {
-  MONGODB_URI,
-  CLIENT_ORIGIN,
-  clientId,
-  clientSecret,
-  redditRedirect
-} = require('./config');
+const { MONGODB_URI, CLIENT_ORIGIN } = require('./config');
 const { authRouter } = require('./auth/auth.router');
 const { userRouter } = require('./user/user.router');
 const { wishListRouter } = require('./wishlist/wishlist.router');
@@ -19,9 +13,10 @@ const { gameSwapRouter } = require('./tradeSwap/gameswapRouter'); //WEIRD NODE E
 const { avExchangeRouter } = require('./tradeSwap/AVexchangeRouter');
 const { hwSwapRouter } = require('./tradeSwap/hardwareSwapRouter');
 const { mechMarketRouter } = require('./tradeSwap/mechmarketRouter');
+const { codeRouter } = require('./redditTokens/code.router');
+const { tokenRefreshRouter } = require('./redditTokens/tokenRefresh.router');
 const { localStrategy, jwtStrategy } = require('./auth/auth.strategy');
 const { dbConnect } = require('./db-mongoose');
-const btoa = require('btoa');
 // const r = new snoowrap({
 //   userAgent: 'Test app by /u/niconi123',
 //   clientId: process.env.clientId,
@@ -53,35 +48,11 @@ app.use('/api/gameswap', gameSwapRouter);
 app.use('/api/AVexchange', avExchangeRouter);
 app.use('/api/wishlist', wishListRouter);
 app.use('/api/mechmarket', mechMarketRouter);
+app.use('/api/code', codeRouter);
+app.use('/api/redditrefresh', tokenRefreshRouter);
 
 app.get('/test', (req, res, next) => {
   res.json({ dog: 'works' });
-});
-
-app.post('/api/code', (req, res, next) => {
-  const code = req.body.code;
-  console.log(req.body);
-  console.log('Here');
-  console.log(clientId, clientSecret);
-
-  console.log(btoa(`${clientId}:${clientSecret}`));
-
-  return fetch('https://www.reddit.com/api/v1/access_token', {
-    method: 'POST', // or 'PUT',
-    mode: 'no-cors',
-    headers: {
-      Authorization: 'Basic ' + btoa(`${clientId}:${clientSecret}`),
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `grant_type=authorization_code&code=${code}&redirect_uri=${redditRedirect}` //http://localhost:3000/RedditTokenRedirect
-  })
-    .then(data => {
-      return data.json();
-    })
-    .then(data => {
-      res.json(data);
-    })
-    .catch(err => console.log(err));
 });
 
 app.use((req, res, next) => {

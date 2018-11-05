@@ -2,30 +2,36 @@ const express = require('express');
 const mechMarketRouter = express.Router();
 const snoowrap = require('snoowrap');
 const { clientId, clientSecret } = require('../config.js');
+const SimpleCrypto = require('simple-crypto-js').default;
+const { TOKEN_SECRET } = require('../config');
 
-function createSnooWrap(refresh) {
+function createSnooWrap(access) {
 	//WE CREATE THIS HIGHER ORDER FUNCTION TO PASS IN PARAMATER OF REFRESH TOKEN PARSED THROUGH THE REQUEST QUERY!!!
 	return new snoowrap({
 		userAgent: 'Test app by /u/niconi123',
 		clientId: clientId,
 		clientSecret: clientSecret,
-		refreshToken: refresh
+		accessToken: access
 	});
 }
 
 mechMarketRouter.get('/', async (req, res, next) => {
+	let simpleCrypto = new SimpleCrypto(TOKEN_SECRET);
+
 	console.log('h');
 	let redditFilter = req.query.redditFilter;
-	let { refreshToken } = req.query;
+	let { accessToken } = req.query;
 	console.log(req.query);
 	console.log('QUERY ABOVE');
-	if (!refreshToken) {
+	if (!accessToken) {
 		const err = new Error('Wheres your token bruh?');
 		err.status = 400;
 		return next(err);
 	}
 
-	const reddit = createSnooWrap(refreshToken);
+	let accessTokenDecrypted = await simpleCrypto.decrypt(accessToken);
+
+	const reddit = createSnooWrap(accessTokenDecrypted);
 
 	try {
 		switch (redditFilter) {
