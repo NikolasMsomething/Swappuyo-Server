@@ -9,7 +9,8 @@ const userSchema = new mongoose.Schema({
   name: { type: String, required: true },
   email: { type: String, required: true },
   username: { type: String, required: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  refreshToken: { type: String }
 });
 
 userSchema.methods.serialize = function() {
@@ -17,7 +18,8 @@ userSchema.methods.serialize = function() {
     id: this._id,
     name: this.name,
     email: this.email,
-    username: this.username
+    username: this.username,
+    refreshToken: this.refreshToken
   };
 };
 

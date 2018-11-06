@@ -21,9 +21,6 @@ describe('Swappuyo API - Wishlist', function() {
     return mongoose.connect(TEST_MONGO_URL);
   });
 
-  //WE JWT SIGN THE SERIALIZED USER OUTSIDE OF TESTS SO QUERYING
-  //FOR THE REGULAR UNSIGNED DATABASE USER.ID DOESNT WORK // LINE 33
-
   beforeEach(function() {
     return Promise.all([
       User.insertMany(users),
