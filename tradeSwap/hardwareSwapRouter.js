@@ -20,6 +20,7 @@ hwSwapRouter.get('/', async (req, res, next) => {
 
 	let { accessToken } = req.query;
 	let redditFilter = req.query.redditFilter;
+	console.log(accessToken, 'line 23');
 
 	if (!accessToken) {
 		const err = new Error('Wheres your token bruh?');

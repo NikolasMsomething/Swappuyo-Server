@@ -40,8 +40,9 @@ tokenRefreshRouter.post('/', async (req, res, next) => {
 		console.log(refreshToken);
 		let data = await response.json();
 		console.log(data);
+		let encryptedAccess = simpleCrypto.encrypt(data.access_token);
 		let tokens = {
-			access_token: data.access_token,
+			access_token: encryptedAccess,
 			expires_in: data.expires_in,
 			type: data.token_type
 		};
