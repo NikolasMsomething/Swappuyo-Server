@@ -2,10 +2,10 @@
 
 Swappuyo is a fast and efficient way to trade items on reddit.com.
 
-[Click here to see a live version!](ppuyo-client.herokuapp.com)
+[Click here to see a live version!](swappuyo-client.herokuapp.com)
 
 
-![example](https://i.imgur.com/rjJ367C.png)
+![example](https://i.imgur.com/D0aG8tD.png)
 
 This backend exposes a RESTful API. 
 
