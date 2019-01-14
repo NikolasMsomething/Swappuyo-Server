@@ -13,9 +13,8 @@ It supports:
 
 * User registration and authentication
 
-* Fetching a user's next flashcards
+* Saving reddit trades on the go
 
-* Flashcard statistics tracking
 
 This app is deployed using a CI/CD setup with Travis-CI and Heroku.
 
